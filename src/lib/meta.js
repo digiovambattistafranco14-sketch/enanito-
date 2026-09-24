@@ -1,0 +1,31 @@
+import { SITE } from '../config/site'
+import { BRAND_BY_ID } from '../data/brands'
+import { PRODUCTS } from '../data/products'
+import { matchProduct } from '../context/Router'
+import { avifSrcSet, SIZES } from './image'
+
+const HOME = {
+  title: 'El Enanito Ordonieee · Embajador Oficial',
+  description:
+    'Portal oficial de El Enanito Ordonieee, embajador de Zoe Importaciones, NG Consultora, Reco.tactika y Apache Indumentaria. Armá tu pedido y confirmalo por WhatsApp.',
+  image: '/products/reco/stand-tactika-md.webp',
+}
+
+// Las vistas previas de WhatsApp/Facebook necesitan la URL completa de la imagen
+const absolute = (path) => `${SITE.url}${path}`
+
+/** Título, descripción e imagen para compartir de cada página (pestaña, Google y vista previa de WhatsApp). */
+export function pageMeta(path) {
+  const id = matchProduct(path)
+  const product = id && PRODUCTS.find((p) => p.id === id)
+  if (!product) return { ...HOME, image: absolute(HOME.image), url: absolute('/') }
+  const brand = BRAND_BY_ID[product.brand]
+  return {
+    title: `${product.name} · ${brand.name} | ${SITE.name}`,
+    description: `${product.description} Pedilo por WhatsApp en la tienda oficial de ${SITE.name}.`,
+    image: absolute(product.images[0].replace(/\.webp$/, '-md.webp')),
+    url: absolute(path),
+    // Foto principal de la galería: se precarga en el <head> de la página del producto
+    preload: { srcSet: avifSrcSet(product.images[0]), sizes: SIZES.gallery },
+  }
+}

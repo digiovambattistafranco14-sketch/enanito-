@@ -42,6 +42,18 @@ export function useScrollTo() {
   }
 }
 
+/** Salto instantáneo a una posición (al cambiar de página o restaurar el scroll). */
+export function useJumpTo() {
+  const lenis = useContext(ScrollContext)
+  return (y) => {
+    if (lenis) {
+      // La página acaba de cambiar: Lenis todavía tiene la altura vieja y recortaría el salto
+      lenis.resize()
+      lenis.scrollTo(y, { immediate: true, force: true })
+    } else window.scrollTo(0, y)
+  }
+}
+
 /** Frena el scroll de la página (por ejemplo con el carrito abierto). */
 export function useScrollLock(locked) {
   const lenis = useContext(ScrollContext)

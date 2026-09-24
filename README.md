@@ -16,10 +16,10 @@ npm run preview  # prueba el build de producción en local
 ## Rendimiento
 
 - **Pre-render:** `npm run build` genera el HTML completo de la página (con el CSS en línea), así el contenido se ve apenas llega, sin esperar al JavaScript. Después React lo "activa" por bloques.
-- **Imágenes responsive:** cada foto tiene 4 tamaños (360 / 640 / 1000 / 1400 px) y el navegador baja solo el que necesita.
+- **Imágenes responsive:** cada foto tiene 4 tamaños (360 / 640 / 1000 / 1400 px) en AVIF y WebP; el navegador baja solo el tamaño y formato que necesita.
 - **Carga diferida:** el carrito, la vista de producto y el motor de animaciones se cargan aparte, después de la primera pintura.
 - **Fuente auto-alojada** (`public/fonts`, solo latín) con precarga.
-- Lighthouse móvil (throttling real): **Performance ~90 · Accesibilidad 100 · Buenas prácticas 100 · SEO 100**.
+- Lighthouse móvil (throttling real): **Performance 91–98 · Accesibilidad 100 · Buenas prácticas 100 · SEO 100**.
 
 ## Lo primero que hay que configurar
 
@@ -29,13 +29,20 @@ npm run preview  # prueba el build de producción en local
 | **Precios** (hoy todos en "Consultar") | `src/data/products.js` |
 | Textos, colores e Instagram de cada marca | `src/data/brands.js` |
 | Créditos del footer, región | `src/config/site.js` |
+| **Dominio** (para que WhatsApp muestre la foto al compartir un producto) | `src/config/site.js` → `url` (o `VITE_SITE_URL`) |
 
 Formato del número: código de país + área + número, sin `+` ni espacios. Ej.: `5493425551234`.
+
+## Páginas de producto
+
+Cada producto tiene su propia página en `/producto/<id>/` (ej. `/producto/zoe-nike-cortez/`), con galería,
+zoom, botón de consulta por WhatsApp, compartir y productos relacionados. El build genera un HTML por
+producto con su título y foto, así el link se ve bien en Google y al compartirlo.
 
 ## Agregar productos
 
 1. Copiá la foto en `public/products/<zoe|ng|reco|apache>/nombre-del-producto.jpg`
-2. Corré `npm run optimize` → la convierte a `.webp` y genera los 4 tamaños
+2. Corré `npm run optimize` → genera los 4 tamaños en `.webp` y `.avif`
 3. Sumá el producto en `src/data/products.js`:
 
 ```js
@@ -64,7 +71,9 @@ src/
   lib/image.js            srcset responsive de las fotos
   lib/flyToCart.js        Animación del producto "volando" al carrito
   lib/lazy.js             Carga diferida del carrito y la vista de producto
-  Root.jsx / entry-server Árbol de la app + pre-render del build
+  context/Router.jsx      Rutas (inicio / producto) con View Transitions
+  components/product/     Página de producto y galería
+  Root.jsx / entry-server Árbol de la app + pre-render del build (una página por producto)
   components/             Navbar, Hero, Brands, HowItWorks, Shop, Footer
   components/shop/        ProductCard, ProductModal, AddToCart
   components/cart/        CartDrawer, Checkout, CartFab, Toast

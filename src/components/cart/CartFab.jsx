@@ -3,7 +3,7 @@ import { useCart } from '../../context/CartContext'
 import { BagIcon } from '../ui/icons'
 
 /** Botón flotante del carrito: aparece cuando hay productos. */
-export default function CartFab() {
+export default function CartFab({ className = '' }) {
   const { count, totalLabel, isOpen, open } = useCart()
   const summary = totalLabel === 'A consultar' ? `${count} ${count === 1 ? 'producto' : 'productos'}` : totalLabel
 
@@ -17,7 +17,7 @@ export default function CartFab() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ type: 'spring', stiffness: 320, damping: 28 }}
-          className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 z-40 flex h-14 items-center gap-3 rounded-full bg-accent pl-2 pr-5 text-white shadow-[0_18px_50px_-12px] shadow-accent/80 transition-transform hover:scale-[1.03] active:scale-95 sm:right-6 sm:bottom-6"
+          className={`${className} fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 z-40 flex h-14 items-center gap-3 rounded-full bg-accent pl-2 pr-5 text-white shadow-[0_18px_50px_-12px] shadow-accent/80 transition-transform hover:scale-[1.03] active:scale-95 sm:right-6 sm:bottom-6`}
         >
           <m.span
             key={count}

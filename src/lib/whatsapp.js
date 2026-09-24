@@ -31,6 +31,12 @@ export function buildOrderMessage(customer, lines, total) {
   ].join('\n')
 }
 
+/** Consulta rápida por un solo producto (botón "Consultar por WhatsApp" de la página del producto). */
+export function buildProductQuestion(product, url) {
+  const brand = BRAND_BY_ID[product.brand]?.name ?? product.brand
+  return ['Hola! 👋 Quiero consultar por este producto:', `• *${product.name}* (${brand})`, '', url].join('\n')
+}
+
 /** api.whatsapp.com conserva mejor los emojis que wa.me en algunos navegadores. */
 export function buildWhatsAppUrl(message, number = SITE.whatsappNumber) {
   return `https://api.whatsapp.com/send?phone=${number}&text=${encodeURIComponent(message)}`

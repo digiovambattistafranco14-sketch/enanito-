@@ -8,6 +8,10 @@ export const SITE = {
   instagram: 'https://www.instagram.com/elenanito.ordonieee/',
   region: 'Reconquista, Santa Fe',
 
+  // Dominio donde se publica la web, sin "/" al final (ej. 'https://enanitoordonieee.com').
+  // Hace falta para que WhatsApp/Instagram muestren la foto del producto al compartir un link.
+  url: import.meta.env.VITE_SITE_URL || '',
+
   // Número de WhatsApp que recibe los pedidos: código de país + área + número,
   // sin "+", espacios ni guiones. Ej. Argentina: 549 + 342 + 5551234 → "5493425551234".
   // También se puede definir con la variable de entorno VITE_WHATSAPP_NUMBER (.env.local).

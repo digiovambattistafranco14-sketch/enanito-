@@ -1,39 +1,49 @@
 import { memo, useRef } from 'react'
 import { BRAND_BY_ID } from '../../data/brands'
+import { getMorphId, morphName, useProductLink } from '../../context/Router'
 import { formatPrice } from '../../lib/format'
-import { responsive, SIZES } from '../../lib/image'
+import { SIZES } from '../../lib/image'
+import Picture from '../ui/Picture'
 import { flyToCart } from '../../lib/flyToCart'
 import AddToCart from './AddToCart'
 
-function ProductCard({ product, onOpen }) {
+/**
+ * Tarjeta de producto. Toda la tarjeta es un link a /producto/<id>/
+ * (técnica "stretched link": el <a> del título se estira sobre la tarjeta),
+ * y el botón Agregar queda por encima para seguir funcionando solo.
+ */
+function ProductCard({ product }) {
   const brand = BRAND_BY_ID[product.brand]
   const [cover, hover] = product.images
   const imgRef = useRef(null)
+  const frameRef = useRef(null)
+  const link = useProductLink()(product.id, () => frameRef.current)
+  // Al volver de la página del producto, esta foto recibe la transición
+  const morph = getMorphId() === product.id
 
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-[1.25rem] border border-line bg-ink-2 transition-[border-color,box-shadow,transform] duration-500 ease-out-quint hover:-translate-y-1 hover:border-line-strong hover:shadow-2xl hover:shadow-black/50 sm:rounded-3xl">
-      <button
-        onClick={onOpen}
-        aria-label={`Ver detalle de ${product.name}`}
+    <article className="group relative flex h-full flex-col overflow-hidden rounded-[1.25rem] border border-line bg-ink-2 transition-[border-color,box-shadow,transform] duration-500 ease-out-quint hover:-translate-y-1 hover:border-line-strong hover:shadow-2xl hover:shadow-black/50 sm:rounded-3xl">
+      <div
+        ref={frameRef}
         className="relative block aspect-[4/5] overflow-hidden bg-ink-3"
+        style={morph ? { viewTransitionName: morphName(product.id) } : undefined}
       >
-        <img
-          ref={imgRef}
-          {...responsive(cover, SIZES.card)}
+        <Picture
+          src={cover}
+          sizes={SIZES.card}
+          imgRef={imgRef}
           alt={product.name}
           width="640"
           height="800"
           loading="lazy"
-          decoding="async"
-          className={`absolute inset-0 size-full object-cover object-top transition-[opacity,transform] duration-700 ease-out-quint group-hover:scale-[1.05] ${hover ? 'group-hover:opacity-0' : ''}`}
+          imgClassName={`absolute inset-0 size-full object-cover object-top transition-[opacity,transform] duration-700 ease-out-quint group-hover:scale-[1.05] ${hover ? 'group-hover:opacity-0' : ''}`}
         />
         {hover && (
-          <img
-            {...responsive(hover, SIZES.card)}
-            alt=""
+          <Picture
+            src={hover}
+            sizes={SIZES.card}
             loading="lazy"
-            decoding="async"
-            className="absolute inset-0 hidden size-full scale-[1.05] object-cover object-top opacity-0 transition-[opacity,transform] duration-700 ease-out-quint group-hover:scale-100 group-hover:opacity-100 [@media(hover:hover)]:block"
+            imgClassName="absolute inset-0 hidden size-full scale-[1.05] object-cover object-top opacity-0 transition-[opacity,transform] duration-700 ease-out-quint group-hover:scale-100 group-hover:opacity-100 [@media(hover:hover)]:block"
           />
         )}
         <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/50 to-transparent" />
@@ -51,23 +61,29 @@ function ProductCard({ product, onOpen }) {
           </span>
         )}
         <span className="glass absolute bottom-2.5 right-2.5 hidden translate-y-2 rounded-full px-3 py-1.5 text-[11px] font-semibold opacity-0 transition-all duration-500 ease-out-quint group-hover:translate-y-0 group-hover:opacity-100 sm:block">
-          Ver detalle
+          Ver producto
         </span>
-      </button>
+      </div>
 
       <div className="flex flex-1 flex-col p-3 sm:p-5">
         <span className="flex min-w-0 items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-subtle sm:text-[11px]">
           <span className="size-1.5 shrink-0 rounded-full" style={{ background: brand.accent }} />
           <span className="truncate">{brand.name}</span>
         </span>
-        <h3 className="mt-1.5 line-clamp-2 text-[13px] font-bold leading-snug sm:text-base">{product.name}</h3>
+        <h3 className="mt-1.5 line-clamp-2 text-[13px] font-bold leading-snug sm:text-base">
+          <a {...link} className="after:absolute after:inset-0 after:z-[1] after:rounded-[inherit] focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-accent">
+            {product.name}
+          </a>
+        </h3>
         <p className="mt-1.5 line-clamp-2 text-[13px] leading-relaxed text-muted max-sm:hidden">{product.description}</p>
 
         <div className="mt-auto flex flex-col gap-2.5 pt-3 sm:flex-row sm:items-center sm:justify-between sm:pt-4">
           <span className={`font-extrabold tracking-tight tabular-nums ${product.price == null ? 'text-xs text-muted sm:text-sm' : 'text-base sm:text-lg'}`}>
             {formatPrice(product.price)}
           </span>
-          <AddToCart productId={product.id} compact onAdded={() => flyToCart(imgRef.current)} />
+          <div className="relative z-[2] w-full sm:w-auto">
+            <AddToCart productId={product.id} compact onAdded={() => flyToCart(imgRef.current)} />
+          </div>
         </div>
       </div>
     </article>

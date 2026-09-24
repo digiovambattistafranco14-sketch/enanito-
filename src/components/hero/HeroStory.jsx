@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, m, useSpring, useTransform } from 'motion/react'
 import { BRANDS } from '../../data/brands'
 import { PRODUCTS } from '../../data/products'
-import { responsive } from '../../lib/image'
+import Picture from '../ui/Picture'
 import { ArrowRightIcon, InstagramIcon, WhatsAppIcon } from '../ui/icons'
 import { STORY_DURATION } from './useStory'
 
@@ -47,17 +47,18 @@ export default function HeroStory({ story, mx, my, onShowProducts }) {
             >
               <AnimatePresence>
                 {showBehind && (
-                <m.img
+                <Picture
+                  motion
                   key={b.id}
-                  {...responsive(b.story.image, SIZES)}
-                  alt=""
+                  src={b.story.image}
+                  sizes={SIZES}
                   loading="lazy"
-                  decoding="async"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 0.35 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.7, ease: EASE }}
-                  className="absolute inset-0 size-full object-cover"
+                  className="absolute inset-0 block"
+                  imgClassName="size-full object-cover"
                 />
                 )}
               </AnimatePresence>
@@ -83,18 +84,20 @@ export default function HeroStory({ story, mx, my, onShowProducts }) {
         >
           {/* Foto con zoom lento tipo Ken Burns */}
           <AnimatePresence initial={false}>
-            <m.img
+            {/* Sin fetchPriority en la foto: la precarga AVIF del <head> ya la pide con prioridad
+                (si no, React agregaría una precarga WebP extra y se bajaría dos veces) */}
+            <Picture
+              motion
               key={brand.id}
-              {...responsive(brand.story.image, SIZES)}
+              src={brand.story.image}
+              sizes={SIZES}
               alt={`${brand.name}: ${brand.story.caption}`}
-              fetchPriority={active === 0 ? 'high' : 'auto'}
-              decoding="async"
-              draggable={false}
               initial={{ opacity: 0, scale: 1.14 }}
               animate={{ opacity: 1, scale: 1.02 }}
               exit={{ opacity: 0 }}
               transition={{ opacity: { duration: 0.6, ease: 'easeOut' }, scale: { duration: STORY_DURATION + 1, ease: 'linear' } }}
-              className="absolute inset-0 size-full select-none object-cover"
+              className="absolute inset-0 block"
+              imgClassName="size-full select-none object-cover"
             />
           </AnimatePresence>
           <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/70 to-transparent" />

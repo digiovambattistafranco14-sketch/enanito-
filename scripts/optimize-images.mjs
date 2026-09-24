@@ -2,6 +2,8 @@
 //  1. Convierte cada .jpg/.jpeg/.png a .webp (máx. 1400px, calidad 78) y borra el original.
 //  2. Genera versiones más chicas para que cada pantalla baje solo lo que necesita:
 //     "-xs" (360px), "-sm" (640px) y "-md" (1000px).
+//  3. Crea una copia .avif de cada tamaño (pesa ~40-50% menos; los navegadores que no
+//     lo soportan usan el .webp automáticamente).
 // Uso: npm run optimize
 import { readdir, unlink, stat, access } from 'node:fs/promises'
 import { join, extname } from 'node:path'
@@ -60,6 +62,17 @@ for (const file of (await walk(ROOT)).filter((f) => f.endsWith('.webp') && !isVa
     console.log(`✓ ${rel(out)}  ${await kb(out)}KB`)
   }
 }
+
+// 3. AVIF de cada .webp (solo los que faltan)
+let avifs = 0
+for (const file of (await walk(ROOT)).filter((f) => f.endsWith('.webp'))) {
+  const out = file.replace(/\.webp$/, '.avif')
+  if (await exists(out)) continue
+  await sharp(file).avif({ quality: 52, effort: 4 }).toFile(out)
+  avifs++
+  if (avifs % 20 === 0) console.log(`  … ${avifs} avif`)
+}
+thumbs += avifs
 
 console.log(
   converted || thumbs

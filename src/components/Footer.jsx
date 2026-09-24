@@ -1,11 +1,11 @@
 import { SITE } from '../config/site'
 import { BRANDS } from '../data/brands'
-import { useScrollTo } from '../context/SmoothScroll'
+import { useGoToSection } from '../context/Router'
 import Reveal from './ui/Reveal'
 import { ArrowUpRightIcon, InstagramIcon } from './ui/icons'
 
 export default function Footer() {
-  const scrollTo = useScrollTo()
+  const goToSection = useGoToSection()
   const year = new Date().getFullYear()
 
   return (
@@ -64,7 +64,7 @@ export default function Footer() {
                     href={href}
                     onClick={(e) => {
                       e.preventDefault()
-                      scrollTo(href)
+                      goToSection(href)
                     }}
                     className="transition-colors hover:text-fg"
                   >

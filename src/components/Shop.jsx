@@ -1,9 +1,9 @@
-import { Suspense, useCallback, useDeferredValue, useMemo, useRef, useState } from 'react'
+import { useDeferredValue, useMemo, useRef, useState } from 'react'
 import { AnimatePresence, m } from 'motion/react'
 import { BRANDS } from '../data/brands'
 import { PRODUCTS } from '../data/products'
 import { useScrollTo } from '../context/SmoothScroll'
-import { ProductModal } from '../lib/lazy'
+import { useRouter } from '../context/Router'
 import Reveal from './ui/Reveal'
 import { CloseIcon, SearchIcon } from './ui/icons'
 import ProductCard from './shop/ProductCard'
@@ -18,11 +18,12 @@ const normalize = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(
 
 export default function Shop({ filter, onFilterChange }) {
   const [query, setQuery] = useState('')
-  const [selected, setSelected] = useState(null)
-  const [modalMounted, setModalMounted] = useState(false)
   const deferredQuery = useDeferredValue(query)
   const gridRef = useRef(null)
   const scrollTo = useScrollTo()
+  // Al volver de un producto, las tarjetas aparecen directo (sin animación de entrada),
+  // así la foto puede hacer la transición de vuelta a su lugar
+  const { hasNavigated } = useRouter()
 
   const products = useMemo(() => {
     const q = normalize(deferredQuery.trim())
@@ -40,12 +41,6 @@ export default function Shop({ filter, onFilterChange }) {
     // Si estabas abajo en la grilla, volvés al principio de los resultados
     if (gridRef.current && gridRef.current.getBoundingClientRect().top < 0) scrollTo(gridRef.current, -170)
   }
-
-  const openProduct = (p) => {
-    setModalMounted(true)
-    setSelected(p)
-  }
-  const closeProduct = useCallback(() => setSelected(null), [])
 
   return (
     <section id="tienda" className="relative py-24 sm:py-32">
@@ -133,7 +128,7 @@ export default function Shop({ filter, onFilterChange }) {
                 key={p.id}
                 layout
                 className="lazy-render"
-                initial={{ opacity: 0, y: 32, scale: 0.97 }}
+                initial={hasNavigated ? false : { opacity: 0, y: 32, scale: 0.97 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true, margin: '0px 0px -6% 0px' }}
                 exit={{ opacity: 0, scale: 0.94, transition: { duration: 0.25 } }}
@@ -142,7 +137,7 @@ export default function Shop({ filter, onFilterChange }) {
                   layout: { duration: 0.45, ease: EASE },
                 }}
               >
-                <ProductCard product={p} onOpen={() => openProduct(p)} />
+                <ProductCard product={p} />
               </m.li>
             ))}
           </AnimatePresence>
@@ -171,12 +166,6 @@ export default function Shop({ filter, onFilterChange }) {
           )}
         </AnimatePresence>
       </div>
-
-      {modalMounted && (
-        <Suspense fallback={null}>
-          <ProductModal product={selected} onClose={closeProduct} />
-        </Suspense>
-      )}
     </section>
   )
 }

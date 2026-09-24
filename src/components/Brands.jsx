@@ -2,7 +2,8 @@ import { useRef } from 'react'
 import { m, useScroll, useTransform } from 'motion/react'
 import { BRANDS } from '../data/brands'
 import { PRODUCTS } from '../data/products'
-import { responsive, SIZES } from '../lib/image'
+import { SIZES } from '../lib/image'
+import Picture from './ui/Picture'
 import Reveal from './ui/Reveal'
 import { ArrowRightIcon, ArrowUpRightIcon, InstagramIcon } from './ui/icons'
 
@@ -75,17 +76,11 @@ function BrandCard({ brand, index, count, onShowProducts }) {
             {Array.isArray(brand.cover) ? (
               <div className="grid size-full grid-cols-3 gap-1">
                 {brand.cover.map((src) => (
-                  <img key={src} {...responsive(src, '(min-width: 768px) 17vw, 33vw')} alt="" loading="lazy" decoding="async" className="size-full object-cover object-center" />
+                  <Picture key={src} src={src} sizes="(min-width: 768px) 17vw, 33vw" loading="lazy" imgClassName="size-full object-cover object-center" />
                 ))}
               </div>
             ) : (
-              <img
-                {...responsive(brand.cover, SIZES.half)}
-                alt={brand.name}
-                loading="lazy"
-                decoding="async"
-                className="size-full object-cover object-center"
-              />
+              <Picture src={brand.cover} sizes={SIZES.half} alt={brand.name} loading="lazy" imgClassName="size-full object-cover object-center" />
             )}
           </div>
         </m.div>

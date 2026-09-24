@@ -3,7 +3,7 @@ import { AnimatePresence, m, useMotionValueEvent, useScroll, useSpring } from 'm
 import { SITE } from '../config/site'
 import { BRANDS } from '../data/brands'
 import { useCart } from '../context/CartContext'
-import { useScrollTo } from '../context/SmoothScroll'
+import { useGoToSection, useRouter } from '../context/Router'
 import useOverlay from './ui/useOverlay'
 import { ArrowUpRightIcon, BagIcon, InstagramIcon } from './ui/icons'
 
@@ -21,8 +21,9 @@ export default function Navbar() {
   const [hidden, setHidden] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const { count, open } = useCart()
-  const scrollTo = useScrollTo()
-  const activeSection = useActiveSection(LINKS.map((l) => l.href.slice(1)))
+  const goToSection = useGoToSection()
+  const { isHome } = useRouter()
+  const activeSection = useActiveSection(LINKS.map((l) => l.href.slice(1)), isHome)
 
   // Se esconde al bajar y reaparece al subir: más pantalla útil en el celular
   useMotionValueEvent(scrollY, 'change', (y) => {
@@ -42,7 +43,7 @@ export default function Navbar() {
   const go = (href) => (e) => {
     e.preventDefault()
     // Con el menú abierto el scroll está bloqueado: esperamos a que se libere
-    setTimeout(() => scrollTo(href), menuOpen ? 80 : 0)
+    setTimeout(() => goToSection(href), menuOpen ? 80 : 0)
     setMenuOpen(false)
   }
 
@@ -71,7 +72,7 @@ export default function Navbar() {
               <span className="text-[13px] font-extrabold leading-none tracking-tight sm:text-sm">
                 ENANITO{' '}
                 <span className="text-muted transition-colors duration-300 group-hover:text-fg">
-                  ORDONI<span className="text-accent">EEE</span>
+                  ORDONI<span className="text-accent-soft">EEE</span>
                 </span>
               </span>
             </a>
@@ -156,11 +157,13 @@ function Logo() {
 }
 
 /** Devuelve el id de la sección que está pasando por el centro de la pantalla. */
-function useActiveSection(ids) {
+function useActiveSection(ids, enabled) {
   const [active, setActive] = useState(null)
   const key = ids.join(',')
 
   useEffect(() => {
+    setActive(null)
+    if (!enabled) return
     const visible = new Map()
     const observer = new IntersectionObserver(
       (entries) => {
@@ -175,7 +178,7 @@ function useActiveSection(ids) {
     })
     return () => observer.disconnect()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key])
+  }, [key, enabled])
 
   return active
 }
