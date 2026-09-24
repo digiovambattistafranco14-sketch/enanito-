@@ -8,13 +8,6 @@
   font-weight: 200 800;
   src: url('/fonts/jakarta-latin.woff2') format('woff2-variations');
 }
-@font-face {
-  font-family: 'Plus Jakarta Sans Variable';
-  font-style: italic;
-  font-display: swap;
-  font-weight: 200 800;
-  src: url('/fonts/jakarta-latin-italic.woff2') format('woff2-variations');
-}
 
 @theme {
   --font-sans: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif;
@@ -32,6 +25,19 @@
   --color-wa: #25d366;
 
   --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-blink: blink 6s ease-in-out infinite;
+  @keyframes blink {
+    0%,
+    46%,
+    50%,
+    100% {
+      scale: 1 1;
+    }
+    48% {
+      scale: 1 0.15;
+    }
+  }
 
   --animate-float: float 7s ease-in-out infinite;
   @keyframes float {

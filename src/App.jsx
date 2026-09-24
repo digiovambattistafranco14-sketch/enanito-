@@ -36,7 +36,7 @@ export default function App() {
       {/* Cada <Suspense> es un bloque que React activa por separado al cargar:
           el celular no se traba procesando toda la página de una sola vez. */}
       <main>
-        <Hero />
+        <Hero onShowProducts={showBrand} />
         <Suspense fallback={null}>
           <Brands onShowProducts={showBrand} />
         </Suspense>

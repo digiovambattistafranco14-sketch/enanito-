@@ -22,6 +22,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const { count, open } = useCart()
   const scrollTo = useScrollTo()
+  const activeSection = useActiveSection(LINKS.map((l) => l.href.slice(1)))
 
   // Se esconde al bajar y reaparece al subir: más pantalla útil en el celular
   useMotionValueEvent(scrollY, 'change', (y) => {
@@ -61,35 +62,49 @@ export default function Navbar() {
       >
         <div className="container-x">
           <nav
-            className={`flex h-14 items-center justify-between rounded-2xl px-2 pl-4 transition-[background-color,border-color,box-shadow] duration-500 ease-out-quint sm:px-3 sm:pl-4 ${
+            className={`grid h-14 grid-cols-[1fr_auto] items-center rounded-2xl px-2 pl-3.5 transition-[background-color,border-color,box-shadow] duration-500 ease-out-quint sm:h-16 sm:px-2.5 sm:pl-4 md:grid-cols-[1fr_auto_1fr] ${
               scrolled || menuOpen ? 'glass shadow-2xl shadow-black/40' : 'border border-transparent'
             }`}
           >
-            <a href="#inicio" onClick={go(0)} className="group flex items-center gap-2.5">
-              <span className="flex gap-1" aria-hidden>
-                <span className="size-2.5 rounded-full bg-accent transition-transform duration-300 group-hover:-translate-y-0.5" />
-                <span className="size-2.5 rounded-full bg-accent transition-transform delay-75 duration-300 group-hover:-translate-y-0.5" />
-              </span>
-              <span className="text-sm font-extrabold tracking-tight">
-                ENANITO <span className="text-muted">ORDONIEEE</span>
+            <a href="#inicio" onClick={go(0)} className="group flex w-fit items-center gap-2.5">
+              <Logo />
+              <span className="text-[13px] font-extrabold leading-none tracking-tight sm:text-sm">
+                ENANITO{' '}
+                <span className="text-muted transition-colors duration-300 group-hover:text-fg">
+                  ORDONI<span className="text-accent">EEE</span>
+                </span>
               </span>
             </a>
 
-            <ul className="hidden items-center gap-1 md:flex">
-              {LINKS.map((l) => (
-                <li key={l.href}>
-                  <a
-                    href={l.href}
-                    onClick={go(l.href)}
-                    className="rounded-full px-4 py-2 text-sm font-medium text-muted transition-colors hover:bg-white/5 hover:text-fg"
-                  >
-                    {l.label}
-                  </a>
-                </li>
-              ))}
+            {/* Links centrados con indicador de la sección actual */}
+            <ul className="hidden items-center gap-0.5 rounded-full border border-line bg-white/[0.03] p-1 md:flex">
+              {LINKS.map((l) => {
+                const current = activeSection === l.href.slice(1)
+                return (
+                  <li key={l.href}>
+                    <a
+                      href={l.href}
+                      onClick={go(l.href)}
+                      aria-current={current ? 'location' : undefined}
+                      className={`relative block rounded-full px-4 py-2 text-sm font-medium transition-colors duration-300 ${
+                        current ? 'text-fg' : 'text-muted hover:text-fg'
+                      }`}
+                    >
+                      {current && (
+                        <m.span
+                          layoutId="nav-active"
+                          className="absolute inset-0 rounded-full bg-white/10 ring-1 ring-white/10"
+                          transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                        />
+                      )}
+                      <span className="relative">{l.label}</span>
+                    </a>
+                  </li>
+                )
+              })}
             </ul>
 
-            <div className="flex items-center gap-1">
+            <div className="flex items-center justify-end gap-1">
               <a
                 href={SITE.instagram}
                 target="_blank"
@@ -103,7 +118,7 @@ export default function Navbar() {
                 data-cart-target
                 onClick={open}
                 aria-label={`Abrir carrito (${count} productos)`}
-                className="relative flex h-10 items-center gap-2 rounded-full bg-white px-3.5 text-sm font-semibold text-ink transition-transform duration-300 hover:scale-[1.04] active:scale-95 sm:px-4"
+                className="relative flex h-10 items-center gap-2 rounded-full bg-white px-3.5 text-sm font-semibold text-ink shadow-[0_8px_24px_-10px_rgba(255,255,255,0.5)] transition-transform duration-300 hover:scale-[1.04] active:scale-95 sm:h-11 sm:px-4"
               >
                 <BagIcon className="size-4" />
                 <span className="hidden sm:inline">Carrito</span>
@@ -126,6 +141,43 @@ export default function Navbar() {
       <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} go={go} />
     </>
   )
+}
+
+/** Los dos puntos rojos (como en el pedido de WhatsApp 🔴🔴) que parpadean como ojos. */
+function Logo() {
+  return (
+    <span aria-hidden className="relative grid size-9 place-items-center rounded-xl bg-white/[0.06] ring-1 ring-white/10 transition-colors duration-300 group-hover:bg-accent/15 sm:size-10">
+      <span className="flex gap-1">
+        <span className="animate-blink size-2.5 rounded-full bg-accent shadow-[0_0_12px] shadow-accent/70 transition-transform duration-300 group-hover:-translate-y-0.5" />
+        <span className="animate-blink size-2.5 rounded-full bg-accent shadow-[0_0_12px] shadow-accent/70 transition-transform delay-75 duration-300 group-hover:-translate-y-0.5" />
+      </span>
+    </span>
+  )
+}
+
+/** Devuelve el id de la sección que está pasando por el centro de la pantalla. */
+function useActiveSection(ids) {
+  const [active, setActive] = useState(null)
+  const key = ids.join(',')
+
+  useEffect(() => {
+    const visible = new Map()
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => visible.set(e.target.id, e.isIntersecting))
+        setActive(ids.find((id) => visible.get(id)) ?? null)
+      },
+      { rootMargin: '-45% 0px -50% 0px' },
+    )
+    ids.forEach((id) => {
+      const el = document.getElementById(id)
+      if (el) observer.observe(el)
+    })
+    return () => observer.disconnect()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key])
+
+  return active
 }
 
 function MenuButton({ open, onToggle }) {

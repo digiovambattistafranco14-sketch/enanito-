@@ -15,6 +15,14 @@
     <meta property="og:image" content="/products/reco/stand-tactika.webp" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preload" href="/fonts/jakarta-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <!-- Foto de la primera historia del inicio (elemento más grande de la pantalla) -->
+    <link
+      rel="preload"
+      as="image"
+      fetchpriority="high"
+      imagesrcset="/products/zoe/nike-cortez-xs.webp 360w, /products/zoe/nike-cortez-sm.webp 640w, /products/zoe/nike-cortez-md.webp 1000w, /products/zoe/nike-cortez.webp 1400w"
+      imagesizes="(min-width: 1024px) 400px, (min-width: 640px) 360px, 80vw"
+    />
     <style>
       /* Fondo oscuro desde el primer instante (evita el flash blanco antes del CSS) */
       html { background: #09090b; color-scheme: dark; }
