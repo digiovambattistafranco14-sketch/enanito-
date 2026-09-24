@@ -1,0 +1,12 @@
+node_modules
+dist
+.env.local
+*.log
+.playwright-mcp
+dist-ssr
+
+# Fotos originales de WhatsApp (ya están optimizadas en public/products)
+/Apache indumentaria/
+/Ng consultora/
+/Reco.tactika/
+/zoe importaciones/

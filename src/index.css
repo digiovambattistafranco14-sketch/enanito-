@@ -1,0 +1,244 @@
+@import 'tailwindcss';
+
+/* Plus Jakarta Sans variable, auto-alojada (solo latín: cubre español). Licencia en /public/fonts */
+@font-face {
+  font-family: 'Plus Jakarta Sans Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url('/fonts/jakarta-latin.woff2') format('woff2-variations');
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans Variable';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url('/fonts/jakarta-latin-italic.woff2') format('woff2-variations');
+}
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif;
+
+  --color-ink: #09090b;
+  --color-ink-2: #111114;
+  --color-ink-3: #18181c;
+  --color-line: rgb(255 255 255 / 0.08);
+  --color-line-strong: rgb(255 255 255 / 0.14);
+  --color-fg: #f4f4f5;
+  --color-muted: #a1a1aa;
+  --color-subtle: #8b8b96;
+  --color-accent: #e8192f; /* contraste AA con texto blanco */
+  --color-accent-soft: #ff5c69;
+  --color-wa: #25d366;
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-float: float 7s ease-in-out infinite;
+  @keyframes float {
+    0%,
+    100% {
+      translate: 0 0;
+    }
+    50% {
+      translate: 0 -10px;
+    }
+  }
+}
+
+@layer base {
+  html {
+    background: var(--color-ink);
+    color: var(--color-fg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+  /* Lenis toma el control del scroll cuando está activo */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+    scroll-behavior: auto;
+  }
+  .lenis.lenis-stopped {
+    overflow: clip;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-ink);
+    overflow-x: clip;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button,
+  a,
+  summary {
+    touch-action: manipulation;
+  }
+
+  /* Grano sutil sobre todo el sitio */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: white;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+    }
+  }
+}
+
+@layer components {
+  .glass {
+    background: rgb(20 20 24 / 0.55);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    border: 1px solid var(--color-line);
+  }
+
+  .container-x {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 640px) {
+    .container-x {
+      padding-inline: 1.5rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .container-x {
+      padding-inline: 2rem;
+    }
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .text-gradient {
+    background: linear-gradient(180deg, #fff 30%, rgb(255 255 255 / 0.45));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .mask-fade-x {
+    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  }
+
+  /* Elementos sticky que se acomodan cuando la navbar se esconde al scrollear */
+  .sticky-under-nav {
+    top: 5.25rem;
+    transition: top 0.45s var(--ease-out-quint);
+  }
+  @media (min-width: 640px) {
+    .sticky-under-nav {
+      top: 6rem;
+    }
+  }
+  html[data-nav='hidden'] .sticky-under-nav {
+    top: 0.75rem;
+  }
+
+  /* Entrada del hero en CSS puro: se ve desde la primera pintura, sin esperar el JavaScript.
+     Retraso con la variable --d (ej. style={{ '--d': '0.4s' }}) */
+  .hero-rise {
+    animation: hero-rise 0.8s var(--ease-out-quint) var(--d, 0s) both;
+  }
+  .hero-slide {
+    /* sin opacidad: el texto cuenta para LCP desde el primer frame */
+    animation: hero-slide 0.9s var(--ease-out-quint) var(--d, 0s) both;
+  }
+  .hero-line {
+    animation: hero-line 1s var(--ease-out-quint) var(--d, 0s) both;
+  }
+  .hero-pop {
+    display: inline-block;
+    animation: hero-pop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) var(--d, 0s) both;
+  }
+  .hero-card {
+    animation: hero-card 1s var(--ease-out-quint) var(--d, 0s) both;
+  }
+  @keyframes hero-rise {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+  }
+  @keyframes hero-slide {
+    from {
+      transform: translateY(14px);
+    }
+  }
+  @keyframes hero-line {
+    from {
+      transform: translateY(110%);
+    }
+  }
+  @keyframes hero-pop {
+    from {
+      opacity: 0;
+      transform: translateY(0.35em) rotate(12deg);
+    }
+  }
+  @keyframes hero-card {
+    from {
+      opacity: 0;
+      transform: translateY(60px) scale(0.92);
+    }
+  }
+
+  /* El navegador no calcula ni pinta los bloques fuera de pantalla hasta que se acercan.
+     "auto" recuerda el tamaño real una vez que se mostró. */
+  /* Solo en celular: en escritorio recortaría las sombras y el efecto hover. */
+  @media (max-width: 767px) {
+    .lazy-render {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 400px;
+    }
+  }
+
+  .pb-safe {
+    padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
