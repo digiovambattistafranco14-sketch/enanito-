@@ -66,7 +66,7 @@ export default function ProductGallery({ product }) {
           <>
             <div className="absolute inset-x-0 bottom-3 flex justify-center gap-1.5 lg:hidden" aria-hidden>
               {images.map((src, i) => (
-                <span key={src} className={`h-1.5 rounded-full transition-all duration-300 ${i === active ? 'w-5 bg-white' : 'w-1.5 bg-white/40'}`} />
+                <span key={src} className={`h-1.5 rounded-full transition-all duration-300 ${i === active ? 'w-5 bg-fg' : 'w-1.5 bg-fg/40'}`} />
               ))}
             </div>
             <span className="glass absolute right-3 top-3 rounded-full px-2.5 py-1 text-[11px] font-semibold tabular-nums">
@@ -90,7 +90,7 @@ export default function ProductGallery({ product }) {
               aria-label={`Ver foto ${i + 1}`}
               aria-current={i === active}
               className={`size-16 shrink-0 overflow-hidden rounded-2xl border-2 transition-all duration-300 sm:size-20 ${
-                i === active ? 'border-white' : 'border-transparent opacity-50 hover:opacity-100'
+                i === active ? 'border-fg' : 'border-transparent opacity-50 hover:opacity-100'
               }`}
             >
               <img src={thumb(src)} alt="" decoding="async" fetchPriority="low" className="size-full object-cover" />

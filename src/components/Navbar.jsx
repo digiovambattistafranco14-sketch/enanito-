@@ -64,7 +64,7 @@ export default function Navbar() {
         <div className="container-x">
           <nav
             className={`grid h-14 grid-cols-[1fr_auto] items-center rounded-2xl px-2 pl-3.5 transition-[background-color,border-color,box-shadow] duration-500 ease-out-quint sm:h-16 sm:px-2.5 sm:pl-4 md:grid-cols-[1fr_auto_1fr] ${
-              scrolled || menuOpen ? 'glass shadow-2xl shadow-black/40' : 'border border-transparent'
+              scrolled || menuOpen ? 'glass shadow-2xl shadow-fg/10' : 'border border-transparent'
             }`}
           >
             <a href="#inicio" onClick={go(0)} className="group flex w-fit items-center gap-2.5">
@@ -72,13 +72,13 @@ export default function Navbar() {
               <span className="text-[13px] font-extrabold leading-none tracking-tight sm:text-sm">
                 ENANITO{' '}
                 <span className="text-muted transition-colors duration-300 group-hover:text-fg">
-                  ORDONI<span className="text-accent-soft">EEE</span>
+                  ORDONI<span className="text-accent">EEE</span>
                 </span>
               </span>
             </a>
 
             {/* Links centrados con indicador de la sección actual */}
-            <ul className="hidden items-center gap-0.5 rounded-full border border-line bg-white/[0.03] p-1 md:flex">
+            <ul className="hidden items-center gap-0.5 rounded-full border border-line bg-fg/[0.03] p-1 md:flex">
               {LINKS.map((l) => {
                 const current = activeSection === l.href.slice(1)
                 return (
@@ -94,7 +94,7 @@ export default function Navbar() {
                       {current && (
                         <m.span
                           layoutId="nav-active"
-                          className="absolute inset-0 rounded-full bg-white/10 ring-1 ring-white/10"
+                          className="absolute inset-0 rounded-full bg-fg/10 ring-1 ring-fg/10"
                           transition={{ type: 'spring', stiffness: 380, damping: 32 }}
                         />
                       )}
@@ -111,7 +111,7 @@ export default function Navbar() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label={`Instagram ${SITE.handle}`}
-                className="hidden size-10 place-items-center rounded-full text-muted transition-colors hover:bg-white/5 hover:text-fg sm:grid"
+                className="hidden size-10 place-items-center rounded-full text-muted transition-colors hover:bg-fg/5 hover:text-fg sm:grid"
               >
                 <InstagramIcon className="size-5" />
               </a>
@@ -119,7 +119,7 @@ export default function Navbar() {
                 data-cart-target
                 onClick={open}
                 aria-label={`Abrir carrito (${count} productos)`}
-                className="relative flex h-10 items-center gap-2 rounded-full bg-white px-3.5 text-sm font-semibold text-ink shadow-[0_8px_24px_-10px_rgba(255,255,255,0.5)] transition-transform duration-300 hover:scale-[1.04] active:scale-95 sm:h-11 sm:px-4"
+                className="relative flex h-10 items-center gap-2 rounded-full bg-fg px-3.5 text-sm font-semibold text-ink shadow-[0_8px_24px_-10px_rgba(11,19,36,0.45)] transition-transform duration-300 hover:scale-[1.04] active:scale-95 sm:h-11 sm:px-4"
               >
                 <BagIcon className="size-4" />
                 <span className="hidden sm:inline">Carrito</span>
@@ -147,7 +147,7 @@ export default function Navbar() {
 /** Los dos puntos rojos (como en el pedido de WhatsApp 🔴🔴) que parpadean como ojos. */
 function Logo() {
   return (
-    <span aria-hidden className="relative grid size-9 place-items-center rounded-xl bg-white/[0.06] ring-1 ring-white/10 transition-colors duration-300 group-hover:bg-accent/15 sm:size-10">
+    <span aria-hidden className="relative grid size-9 place-items-center rounded-xl bg-fg/[0.06] ring-1 ring-fg/10 transition-colors duration-300 group-hover:bg-accent/15 sm:size-10">
       <span className="flex gap-1">
         <span className="animate-blink size-2.5 rounded-full bg-accent shadow-[0_0_12px] shadow-accent/70 transition-transform duration-300 group-hover:-translate-y-0.5" />
         <span className="animate-blink size-2.5 rounded-full bg-accent shadow-[0_0_12px] shadow-accent/70 transition-transform delay-75 duration-300 group-hover:-translate-y-0.5" />
@@ -189,7 +189,7 @@ function MenuButton({ open, onToggle }) {
       onClick={onToggle}
       aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
       aria-expanded={open}
-      className="relative grid size-10 place-items-center rounded-full transition-colors hover:bg-white/5 md:hidden"
+      className="relative grid size-10 place-items-center rounded-full transition-colors hover:bg-fg/5 md:hidden"
     >
       <span className="relative block h-3 w-5" aria-hidden>
         <m.span
@@ -270,7 +270,7 @@ function MobileMenu({ open, onClose, go }) {
               href={SITE.instagram}
               target="_blank"
               rel="noreferrer"
-              className="flex h-14 items-center justify-between rounded-2xl bg-white px-5 font-bold text-ink"
+              className="flex h-14 items-center justify-between rounded-2xl bg-fg px-5 font-bold text-ink"
             >
               <span className="flex items-center gap-3">
                 <InstagramIcon className="size-5" />

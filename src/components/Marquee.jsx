@@ -13,7 +13,7 @@ import {
 import { BRANDS } from '../data/brands'
 
 const WORDS = BRANDS.flatMap((b) => [
-  { text: b.name, color: b.accent },
+  { text: b.name, color: b.text },
   { text: b.category.split(' · ')[0], color: null },
 ])
 
@@ -58,7 +58,7 @@ export default function Marquee() {
         {[...WORDS, ...WORDS].map((w, i) => (
           <li key={i} className="flex items-center gap-8 whitespace-nowrap pr-8 sm:gap-10 sm:pr-10">
             <span
-              className={`text-xl font-extrabold uppercase tracking-tight sm:text-3xl ${w.color ? '' : 'text-white/25'}`}
+              className={`text-xl font-extrabold uppercase tracking-tight sm:text-3xl ${w.color ? '' : 'text-fg/20'}`}
               style={w.color ? { color: w.color } : undefined}
             >
               {w.text}

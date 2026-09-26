@@ -105,7 +105,7 @@ export const PRODUCTS = [
   {
     id: 'reco-rocky-negras',
     brand: 'reco',
-    name: 'Botas Tácticas Rocky Negras',
+    name: 'Borceguíes Tácticos Rocky Negros',
     description: 'Cuero y Cordura®, punta reforzada, protección de tobillo y suela antideslizante resistente a aceites.',
     price: null,
     tag: 'Más vendido',
@@ -114,7 +114,7 @@ export const PRODUCTS = [
   {
     id: 'reco-rocky-cierre',
     brand: 'reco',
-    name: 'Botas Rocky con Cierre Lateral',
+    name: 'Borceguíes Rocky con Cierre Lateral',
     description: 'Caña media con cierre lateral para calzado rápido. Ripstop negro y cuero.',
     price: null,
     images: img('reco', 'botas-rocky-cierre', 'botas-rocky-cierre-2'),
@@ -122,7 +122,7 @@ export const PRODUCTS = [
   {
     id: 'reco-rocky-coyote',
     brand: 'reco',
-    name: 'Botas Rocky Coyote',
+    name: 'Borceguíes Rocky Coyote',
     description: 'Gamuza color coyote con suela de alto agarre. Próximo ingreso: reservá la tuya.',
     price: null,
     tag: 'Próximo ingreso',

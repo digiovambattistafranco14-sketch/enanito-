@@ -77,7 +77,7 @@ export default function HeroStory({ story, mx, my, onShowProducts }) {
         className="relative"
       >
         <div
-          className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-white/15 bg-ink-3 shadow-[0_40px_90px_-30px_rgba(0,0,0,0.9)] sm:aspect-[9/13]"
+          className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-white/15 bg-ink-3 shadow-[0_40px_90px_-30px_rgba(15,23,42,0.45)] sm:aspect-[9/13]"
           onPointerDown={pause}
           onPointerUp={resume}
           onPointerCancel={resume}
@@ -131,7 +131,7 @@ export default function HeroStory({ story, mx, my, onShowProducts }) {
               className="flex items-center gap-2.5 rounded-full py-1 pr-2 transition-colors hover:bg-white/10"
             >
               <span className="rounded-full bg-[conic-gradient(from_200deg,#f9ce34,#ee2a7b,#6228d7,#f9ce34)] p-[2px]">
-                <span className="grid size-8 place-items-center rounded-full border-2 border-black text-xs font-extrabold text-ink" style={{ background: brand.accent }}>
+                <span className="grid size-8 place-items-center rounded-full border-2 border-black text-xs font-extrabold text-fg" style={{ background: brand.accent }}>
                   {brand.short[0]}
                 </span>
               </span>
@@ -170,11 +170,11 @@ export default function HeroStory({ story, mx, my, onShowProducts }) {
             </AnimatePresence>
             <button
               onClick={() => onShowProducts(brand.id)}
-              className="group mt-4 flex h-12 w-full items-center justify-between rounded-full bg-white pl-5 pr-1.5 text-sm font-bold text-ink transition-transform duration-300 active:scale-[0.98]"
+              className="group mt-4 flex h-12 w-full items-center justify-between rounded-full bg-white pl-5 pr-1.5 text-sm font-bold text-fg transition-transform duration-300 active:scale-[0.98]"
             >
               Ver productos de {brand.short}
               <span
-                className="grid size-9 place-items-center rounded-full text-ink transition-transform duration-300 group-hover:translate-x-0.5"
+                className="grid size-9 place-items-center rounded-full text-fg transition-transform duration-300 group-hover:translate-x-0.5"
                 style={{ background: brand.accent }}
               >
                 <ArrowRightIcon className="size-4" />
@@ -185,10 +185,10 @@ export default function HeroStory({ story, mx, my, onShowProducts }) {
 
         {/* Chips flotantes (escritorio) */}
         <div
-          className="glass absolute -left-16 top-24 z-30 hidden animate-float items-center gap-2.5 rounded-2xl py-2.5 pl-2.5 pr-4 shadow-xl shadow-black/40 xl:flex"
+          className="glass absolute -left-16 top-24 z-30 hidden animate-float items-center gap-2.5 rounded-2xl py-2.5 pl-2.5 pr-4 shadow-xl shadow-fg/10 xl:flex"
           style={{ transform: 'translateZ(60px)' }}
         >
-          <span className="grid size-8 place-items-center rounded-xl bg-wa text-ink">
+          <span className="grid size-8 place-items-center rounded-xl bg-wa text-fg">
             <WhatsAppIcon className="size-4.5" />
           </span>
           <span className="text-xs font-semibold leading-tight">
@@ -197,7 +197,7 @@ export default function HeroStory({ story, mx, my, onShowProducts }) {
           </span>
         </div>
         <div
-          className="glass absolute -right-12 bottom-36 z-30 hidden animate-float items-center gap-2 rounded-2xl px-4 py-2.5 shadow-xl shadow-black/40 xl:flex"
+          className="glass absolute -right-12 bottom-36 z-30 hidden animate-float items-center gap-2 rounded-2xl px-4 py-2.5 shadow-xl shadow-fg/10 xl:flex"
           style={{ transform: 'translateZ(80px)', animationDelay: '-3s' }}
         >
           <span className="text-xl font-extrabold tabular-nums">{PRODUCTS.length}+</span>

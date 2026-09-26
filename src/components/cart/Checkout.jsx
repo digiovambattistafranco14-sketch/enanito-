@@ -56,7 +56,7 @@ export default function Checkout() {
           initial={{ scale: 0.5, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ type: 'spring', stiffness: 300, damping: 18 }}
-          className="grid size-20 place-items-center rounded-full bg-wa text-ink"
+          className="grid size-20 place-items-center rounded-full bg-wa text-white"
         >
           <CheckIcon className="size-9" strokeWidth={2.6} />
         </m.div>
@@ -64,7 +64,7 @@ export default function Checkout() {
         <p className="mt-2 text-sm leading-relaxed text-muted">
           Se abrió WhatsApp con tu pedido. Solo tocá <b className="text-fg">Enviar</b> y te respondemos con precios y stock.
         </p>
-        <a href={sentUrl} target="_blank" rel="noreferrer" className="mt-5 text-sm font-semibold text-wa underline-offset-4 hover:underline">
+        <a href={sentUrl} target="_blank" rel="noreferrer" className="mt-5 text-sm font-semibold text-wa-ink underline-offset-4 hover:underline">
           ¿No se abrió? Tocá acá
         </a>
         <button
@@ -72,7 +72,7 @@ export default function Checkout() {
             clear()
             close()
           }}
-          className="mt-8 rounded-full bg-white px-6 py-3 text-sm font-bold text-ink transition-transform active:scale-95"
+          className="mt-8 rounded-full bg-fg px-6 py-3 text-sm font-bold text-ink transition-transform active:scale-95"
         >
           Vaciar carrito y terminar
         </button>
@@ -126,7 +126,7 @@ export default function Checkout() {
         </div>
         <button
           type="submit"
-          className="group mt-4 flex h-13 w-full items-center justify-center gap-2.5 rounded-full bg-wa text-sm font-bold text-ink shadow-[0_10px_40px_-12px] shadow-wa/70 transition-all duration-300 hover:brightness-110 active:scale-[0.98]"
+          className="group mt-4 flex h-13 w-full items-center justify-center gap-2.5 rounded-full bg-wa text-sm font-bold text-fg shadow-[0_10px_40px_-12px] shadow-wa/70 transition-all duration-300 hover:brightness-110 active:scale-[0.98]"
         >
           <WhatsAppIcon className="size-5 transition-transform duration-300 group-hover:scale-110" />
           Enviar pedido por WhatsApp
@@ -147,7 +147,7 @@ function Field({ label, id, error, ...input }) {
         aria-invalid={Boolean(error)}
         aria-describedby={error ? `${id}-error` : undefined}
         className={`h-12 w-full rounded-xl border bg-ink px-4 text-base outline-none transition-all duration-300 placeholder:text-subtle focus:bg-ink-3 ${
-          error ? 'border-accent' : 'border-line-strong focus:border-white/40'
+          error ? 'border-danger' : 'border-line-strong focus:border-fg/40'
         }`}
         {...input}
       />
@@ -158,7 +158,7 @@ function Field({ label, id, error, ...input }) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="mt-1.5 text-xs font-medium text-accent-soft"
+            className="mt-1.5 text-xs font-medium text-danger"
           >
             {error}
           </m.p>

@@ -27,7 +27,7 @@ export default function Brands({ onShowProducts }) {
           <Reveal delay={0.1}>
             <p className="max-w-lg text-base leading-relaxed text-muted lg:ml-auto">
               El Enanito Ordonieee no recomienda cualquier cosa. Estas son las empresas que eligió representar porque las
-              conoce, las usa y las banca. Cada una en su rubro, todas con la misma actitud.
+              conoce, las usa y las apoya. Cada una en su rubro, todas con la misma actitud.
             </p>
           </Reveal>
         </div>
@@ -84,11 +84,11 @@ function BrandCard({ brand, index, count, onShowProducts }) {
             )}
           </div>
         </m.div>
-        <div className="absolute inset-0 bg-gradient-to-t from-ink-2 via-ink-2/40 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-ink-2 to-transparent" />
         <span className="absolute left-5 top-5 font-mono text-xs font-semibold text-white/70">0{index + 1}</span>
         <span
           className="glass absolute right-4 top-4 max-w-[70%] truncate rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-wider sm:right-5 sm:top-5 sm:text-[11px]"
-          style={{ color: brand.accent }}
+          style={{ color: brand.text }}
         >
           {brand.category}
         </span>
@@ -96,20 +96,31 @@ function BrandCard({ brand, index, count, onShowProducts }) {
 
       <div className="relative z-20 -mt-10 flex flex-col p-5 sm:p-8">
         <h3 className="text-3xl font-extrabold tracking-tight sm:text-4xl">{brand.name}</h3>
-        <p className="mt-2 text-sm font-semibold" style={{ color: brand.accent }}>
+        <p className="mt-2 text-sm font-semibold" style={{ color: brand.text }}>
           {brand.tagline}
         </p>
         <p className="mt-4 text-[15px] leading-relaxed text-muted">{brand.description}</p>
 
+        {brand.services && (
+          <ul className="mt-5 grid gap-2">
+            {brand.services.map((service) => (
+              <li key={service} className="flex gap-2.5 text-sm leading-snug text-fg/85">
+                <span className="mt-1.5 size-1.5 shrink-0 rounded-full" style={{ background: brand.accent }} />
+                {service}
+              </li>
+            ))}
+          </ul>
+        )}
+
         <blockquote className="mt-6 border-l-2 pl-4 text-sm leading-relaxed text-fg/85" style={{ borderColor: brand.accent }}>
-          <span className="mb-1 block text-[11px] font-bold uppercase tracking-[0.16em] text-subtle">La alianza</span>
+          <span className="mb-1 block text-[11px] font-bold uppercase tracking-[0.16em] text-subtle">{brand.allianceLabel ?? 'La alianza'}</span>
           {brand.alliance}
         </blockquote>
 
         <div className="mt-7 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:items-center">
           <button
             onClick={() => onShowProducts(brand.id)}
-            className="group/btn inline-flex h-12 items-center justify-center gap-2 rounded-full sm:h-11 bg-white px-5 text-sm font-bold text-ink transition-all duration-300 hover:gap-3 active:scale-[0.97]"
+            className="group/btn inline-flex h-12 items-center justify-center gap-2 rounded-full sm:h-11 bg-fg px-5 text-sm font-bold text-ink transition-all duration-300 hover:gap-3 active:scale-[0.97]"
           >
             Ver productos
             <span className="rounded-full bg-ink/10 px-1.5 text-xs tabular-nums">{count}</span>
@@ -119,7 +130,7 @@ function BrandCard({ brand, index, count, onShowProducts }) {
             href={brand.instagram}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex h-12 items-center justify-center gap-2 rounded-full border sm:h-11 border-line-strong px-4 text-sm font-semibold text-fg/90 transition-colors duration-300 hover:bg-white/5"
+            className="inline-flex h-12 items-center justify-center gap-2 rounded-full border sm:h-11 border-line-strong px-4 text-sm font-semibold text-fg/90 transition-colors duration-300 hover:bg-fg/5"
           >
             <InstagramIcon className="size-4" />
             {brand.handle}

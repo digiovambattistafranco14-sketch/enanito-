@@ -32,7 +32,7 @@ export default function AddToCart({ productId, compact = false, onAdded }) {
               add(productId)
               onAdded?.()
             }}
-            className={`${height} ${width} inline-flex items-center justify-center gap-1.5 rounded-full bg-white font-bold text-ink transition-colors duration-300 hover:bg-accent hover:text-white active:scale-95 ${
+            className={`${height} ${width} inline-flex items-center justify-center gap-1.5 rounded-full bg-fg font-bold text-ink transition-colors duration-300 hover:bg-accent hover:text-white active:scale-95 ${
               compact ? 'px-3.5 text-xs' : 'px-6 text-sm'
             }`}
           >

@@ -59,7 +59,7 @@ export default function Hero({ onShowProducts }) {
           className="absolute -right-24 top-[35%] size-[26rem] rounded-full opacity-20 blur-[100px] sm:top-[12%] sm:size-[38rem] sm:blur-[140px] lg:right-[2%]"
           style={{ backgroundColor: BRANDS[0].accent }}
         />
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgb(255_255_255/0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgb(255_255_255/0.035)_1px,transparent_1px)] bg-[size:56px_56px] [mask-image:radial-gradient(ellipse_70%_60%_at_40%_30%,#000_30%,transparent_75%)] sm:bg-[size:72px_72px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgb(15_23_42/0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgb(15_23_42/0.05)_1px,transparent_1px)] bg-[size:56px_56px] [mask-image:radial-gradient(ellipse_70%_60%_at_40%_30%,#000_30%,transparent_75%)] sm:bg-[size:72px_72px]" />
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-ink to-transparent" />
       </div>
 
@@ -74,8 +74,8 @@ export default function Hero({ onShowProducts }) {
           >
             <span className="flex items-center gap-1.5 rounded-full bg-accent px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
               <span className="relative flex size-1.5">
-                <span className="absolute inline-flex size-full animate-ping rounded-full bg-white opacity-75" />
-                <span className="relative inline-flex size-1.5 rounded-full bg-white" />
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-fg opacity-75" />
+                <span className="relative inline-flex size-1.5 rounded-full bg-fg" />
               </span>
               Creador
             </span>
@@ -115,7 +115,7 @@ export default function Hero({ onShowProducts }) {
                   exit={{ y: '-105%' }}
                   transition={{ duration: 0.55, ease: EASE }}
                   className="col-start-1 row-start-1 whitespace-nowrap font-extrabold"
-                  style={{ color: brand.accent }}
+                  style={{ color: brand.text }}
                 >
                   {brand.name}
                 </m.span>
@@ -124,7 +124,7 @@ export default function Hero({ onShowProducts }) {
           </p>
 
           <p className="hero-slide mt-4 max-w-lg text-[15px] leading-relaxed text-muted sm:text-base" style={delay(0.35)}>
-            Tecnología importada, seguridad laboral, equipo táctico y la camiseta de la Selección.{' '}
+            Artículos importados, seguridad laboral, equipo táctico y camisetas de selecciones y clubes.{' '}
             <span className="text-fg">Todo en un solo lugar, con pedido directo por WhatsApp.</span>
           </p>
 
@@ -145,7 +145,7 @@ export default function Hero({ onShowProducts }) {
                 target="_blank"
                 rel="noreferrer"
                 aria-label={`Instagram ${SITE.handle}`}
-                className="glass group inline-flex size-13 items-center justify-center gap-2.5 rounded-full text-sm font-semibold transition-colors duration-300 hover:border-line-strong hover:bg-white/10 active:scale-[0.97] sm:w-auto sm:px-6"
+                className="glass group inline-flex size-13 items-center justify-center gap-2.5 rounded-full text-sm font-semibold transition-colors duration-300 hover:border-line-strong hover:bg-fg/10 active:scale-[0.97] sm:w-auto sm:px-6"
               >
                 <InstagramIcon className="size-5 transition-transform duration-300 group-hover:rotate-[-8deg] group-hover:scale-110 sm:size-4.5" />
                 <span className="hidden sm:inline">{SITE.handle}</span>
@@ -172,8 +172,8 @@ export default function Hero({ onShowProducts }) {
                   key={b.id}
                   onClick={() => story.go(i)}
                   aria-label={`Ver ${b.name}`}
-                  className={`grid size-9 place-items-center rounded-full border-2 border-ink text-[11px] font-extrabold text-ink transition-transform duration-300 hover:z-10 hover:-translate-y-1 ${
-                    i === story.active ? 'z-10 -translate-y-1 ring-2 ring-white/70' : ''
+                  className={`grid size-9 place-items-center rounded-full border-2 border-ink text-[11px] font-extrabold text-fg transition-transform duration-300 hover:z-10 hover:-translate-y-1 ${
+                    i === story.active ? 'z-10 -translate-y-1 ring-2 ring-fg/70' : ''
                   }`}
                   style={{ background: b.accent }}
                 >

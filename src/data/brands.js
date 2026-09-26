@@ -1,6 +1,9 @@
 // Las 4 embajadas. `id` coincide con la carpeta /public/products/<id>/
-// `accent` tiñe chips, bordes y brillos de cada marca.
-// `story` es la historia que aparece en el inicio (foto vertical + frase corta).
+// `accent` tiñe fondos, puntos, bordes y brillos de cada marca.
+// `text`   es el mismo color en versión oscura, legible como texto sobre fondo claro.
+// `story`  es la historia que aparece en el inicio (foto vertical + frase corta).
+// `services` (opcional) se muestra como lista en la tarjeta de la marca.
+// `formal` (opcional) quita las menciones al Enanito en los textos de esa marca.
 
 const img = (brand, file) => `/products/${brand}/${file}.webp`
 
@@ -11,16 +14,17 @@ export const BRANDS = [
     short: 'Zoe',
     instagram: 'https://www.instagram.com/zoeee.impotaciones/',
     handle: '@zoeee.impotaciones',
-    category: 'Importados · Tecnología · Moda',
+    category: 'Artículos importados',
     accent: '#ff4fa3',
+    text: '#c01a72',
     // Varias fotos → se muestran en mosaico
     cover: [img('zoe', 'samsung-galaxy-a26'), img('zoe', 'nike-cortez'), img('zoe', 'camara-wifi-smart')],
-    tagline: 'Lo que buscás, traído de afuera.',
+    tagline: 'Del exterior a la puerta de tu casa.',
     description:
-      'Celulares, cámaras de seguridad, zapatillas originales y bebidas premium importadas. Zoe acerca productos que cuesta conseguir, a precio de importador y con atención directa.',
+      'Artículos importados: celulares, cámaras de seguridad, zapatillas originales, bebidas premium y mucho más. Zoe trae del exterior lo que cuesta conseguir y te lo lleva a la puerta de tu casa, con atención directa.',
     alliance:
       'El Enanito prueba y muestra cada ingreso antes que nadie: si pasa por sus manos, es porque vale la pena.',
-    story: { image: img('zoe', 'nike-cortez'), caption: 'Zapatillas, celulares y tecnología importada.' },
+    story: { image: img('zoe', 'nike-cortez'), caption: 'Artículos importados, del exterior a la puerta de tu casa.' },
   },
   {
     id: 'ng',
@@ -29,13 +33,16 @@ export const BRANDS = [
     instagram: 'https://www.instagram.com/ng.consultora.hys/',
     handle: '@ng.consultora.hys',
     category: 'Seguridad e Higiene Laboral',
-    accent: '#4f7bff',
+    accent: '#5b7fe8',
+    text: '#1e3fa8',
+    formal: true,
     cover: img('ng', 'equipo-en-accion'),
     tagline: 'Tu empresa segura, tu equipo protegido.',
     description:
-      'Asesoramiento y servicios de Seguridad e Higiene Laboral: mediciones de iluminación y ruido, planes de evacuación, capacitaciones, investigación de accidentes y cursos de RCP. Cumplen la normativa y previenen riesgos.',
+      'Asesoramiento y servicios de Seguridad e Higiene Laboral: mediciones de iluminación y ruido, planes de evacuación, capacitaciones, investigación de accidentes y cursos de RCP. Cumplimos la normativa y prevenimos riesgos.',
+    allianceLabel: 'A cargo',
     alliance:
-      'Prevenir hoy, proteger siempre. El Enanito lleva el mensaje de la prevención a eventos, empresas y a toda la comunidad.',
+      'Emanuel Ordoñez, Técnico Superior en Seguridad e Higiene en el Trabajo. Compromiso, profesionalismo, experiencia y resultados para cada empresa.',
     story: { image: img('ng', 'equipo-en-accion'), caption: 'Seguridad laboral y capacitaciones para tu empresa.' },
   },
   {
@@ -46,13 +53,14 @@ export const BRANDS = [
     handle: '@reco.tactika',
     category: 'Indumentaria & Accesorios Tácticos',
     accent: '#f5c518',
+    text: '#8a6a00',
     cover: img('reco', 'stand-tactika'),
     tagline: 'Confort y resistencia para el servicio.',
     description:
-      'Botas Rocky, camperas softshell y Gore-Tex, uniformes BDU, chalecos, pantalones cargo y accesorios de supervivencia. Equipamiento táctico pensado para fuerzas de seguridad, outdoor y uso urbano.',
+      'Borceguíes Rocky, camperas tipo M1 Alpha, softshell y Gore-Tex, uniformes BDU, chalecos, pantalones cargo y accesorios de supervivencia. Equipamiento táctico para fuerzas de seguridad, outdoor y uso urbano.',
     alliance:
       'Equipo que aguanta todo, igual que el Enanito. Lo usa en la calle, en el campo y en cada aventura que comparte.',
-    story: { image: img('reco', 'botas-rocky-negras'), caption: 'Botas Rocky, camperas y equipo táctico.' },
+    story: { image: img('reco', 'botas-rocky-negras'), caption: 'Borceguíes Rocky, camperas M1 Alpha y equipo táctico.' },
   },
   {
     id: 'apache',
@@ -61,15 +69,22 @@ export const BRANDS = [
     instagram: 'https://www.instagram.com/apacheindumentaria_/reels/',
     handle: '@apacheindumentaria_',
     website: 'https://www.actitudapache.com/',
-    category: 'Camisetas & Bordados personalizados',
+    category: 'Camisetas, conjuntos y sublimación',
     accent: '#74acdf',
+    text: '#1f6aa8',
     cover: img('apache', 'showroom'),
-    tagline: 'Ropa con actitud. Y con tres estrellas.',
+    tagline: 'Ropa con actitud, para vos y para tu equipo.',
     description:
-      'Camisetas de la Selección con parches de campeón del mundo, dorsales y bordados a medida: escudos, banderas, insignias de la Fuerza Aérea y lo que se te ocurra.',
+      'Camisetas de la Selección Argentina y de otras selecciones, y de equipos nacionales e internacionales, en todas las categorías. Además, banderas personalizadas, conjuntos para tu equipo y sublimación de remeras.',
+    services: [
+      'Camisetas de selecciones y de equipos nacionales e internacionales, todas las categorías',
+      'Banderas personalizadas',
+      'Conjuntos de pantalón y camiseta para fútbol, básquet, vóley y más',
+      'Estampado y sublimación de remeras para empresas y eventos',
+    ],
     alliance:
-      'Nadie alienta más fuerte que el Enanito. Apache viste su pasión celeste y blanca, bordada a medida.',
-    story: { image: img('apache', 'camiseta-faa'), caption: 'Camisetas de la Selección bordadas a medida.' },
+      'Nadie alienta más fuerte que el Enanito. Apache viste su pasión celeste y blanca, y la de todo tu equipo.',
+    story: { image: img('apache', 'camiseta-faa'), caption: 'Camisetas de selecciones y clubes, conjuntos y sublimación.' },
   },
 ]
 

@@ -41,7 +41,7 @@ export default function HowItWorks() {
                 as="li"
                 key={title}
                 delay={i * 0.12}
-                className="group relative flex gap-5 rounded-3xl border border-line p-5 transition-colors duration-500 hover:border-line-strong hover:bg-white/[0.02] md:block md:p-7"
+                className="group relative flex gap-5 rounded-3xl border border-line p-5 transition-colors duration-500 hover:border-line-strong hover:bg-fg/[0.02] md:block md:p-7"
               >
                 <div className="flex shrink-0 items-center justify-between md:justify-center">
                   <span className="relative grid size-12 place-items-center rounded-2xl bg-ink-3 text-fg ring-1 ring-line transition-all duration-500 ease-out-quint group-hover:scale-110 group-hover:bg-accent group-hover:text-white">

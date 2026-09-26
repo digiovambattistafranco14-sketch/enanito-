@@ -24,10 +24,10 @@ export default function CartFab({ className = '' }) {
             initial={{ scale: 0.7, rotate: -12 }}
             animate={{ scale: 1, rotate: 0 }}
             transition={{ type: 'spring', stiffness: 500, damping: 15 }}
-            className="relative grid size-10 place-items-center rounded-full bg-white text-ink"
+            className="relative grid size-10 place-items-center rounded-full bg-fg text-ink"
           >
             <BagIcon className="size-4.5" />
-            <span className="absolute -right-1 -top-1 grid min-w-5 place-items-center rounded-full bg-ink px-1 text-[10px] font-bold leading-5 text-white ring-2 ring-accent tabular-nums">
+            <span className="absolute -right-1 -top-1 grid min-w-5 place-items-center rounded-full bg-fg px-1 text-[10px] font-bold leading-5 text-ink ring-2 ring-accent tabular-nums">
               {count}
             </span>
           </m.span>

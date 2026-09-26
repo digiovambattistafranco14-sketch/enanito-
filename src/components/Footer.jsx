@@ -26,7 +26,7 @@ export default function Footer() {
             href={SITE.instagram}
             target="_blank"
             rel="noreferrer"
-            className="group inline-flex h-14 items-center gap-3 rounded-full bg-white pl-2 pr-6 font-bold text-ink transition-transform duration-300 hover:scale-[1.03] active:scale-95"
+            className="group inline-flex h-14 items-center gap-3 rounded-full bg-fg pl-2 pr-6 font-bold text-ink transition-transform duration-300 hover:scale-[1.03] active:scale-95"
           >
             <span className="grid size-10 place-items-center rounded-full bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white">
               <InstagramIcon className="size-5" />
@@ -85,7 +85,7 @@ export default function Footer() {
 
       <p
         aria-hidden
-        className="mt-16 select-none whitespace-nowrap text-center text-[clamp(3rem,15vw,15rem)] font-extrabold uppercase leading-[0.8] tracking-[-0.06em] text-transparent [-webkit-text-stroke:1px_rgb(255_255_255/0.09)]"
+        className="mt-16 select-none whitespace-nowrap text-center text-[clamp(3rem,15vw,15rem)] font-extrabold uppercase leading-[0.8] tracking-[-0.06em] text-transparent [-webkit-text-stroke:1px_rgb(15_23_42/0.12)]"
       >
         Ordoni<span className="[-webkit-text-stroke:1px_var(--color-accent)]">eee</span>
       </p>

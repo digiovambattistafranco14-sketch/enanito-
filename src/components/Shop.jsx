@@ -67,7 +67,7 @@ export default function Shop({ filter, onFilterChange }) {
                 enterKeyHint="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Buscar: botas, camiseta, RCP…"
+                placeholder="Buscar: borceguíes, camiseta, RCP…"
                 // 16px en celular: evita que iPhone haga zoom al tocar el buscador
                 className="w-full bg-transparent text-base outline-none placeholder:text-subtle sm:text-sm [&::-webkit-search-cancel-button]:hidden"
               />
@@ -79,7 +79,7 @@ export default function Shop({ filter, onFilterChange }) {
                     exit={{ opacity: 0, scale: 0.6 }}
                     onClick={() => setQuery('')}
                     aria-label="Limpiar búsqueda"
-                    className="-mr-1 grid size-8 shrink-0 place-items-center rounded-full text-subtle hover:bg-white/5 hover:text-fg"
+                    className="-mr-1 grid size-8 shrink-0 place-items-center rounded-full text-subtle hover:bg-fg/5 hover:text-fg"
                   >
                     <CloseIcon className="size-4" />
                   </m.button>
@@ -91,7 +91,7 @@ export default function Shop({ filter, onFilterChange }) {
 
         {/* Filtros por marca */}
         <div className="sticky-under-nav sticky z-30 -mx-4 mt-10 px-4 sm:mx-0 sm:px-0">
-          <div role="tablist" aria-label="Filtrar por marca" className="glass no-scrollbar flex gap-1 overflow-x-auto rounded-full p-1.5 shadow-xl shadow-black/30 sm:inline-flex">
+          <div role="tablist" aria-label="Filtrar por marca" className="glass no-scrollbar flex gap-1 overflow-x-auto rounded-full p-1.5 shadow-xl shadow-fg/10 sm:inline-flex">
             {FILTERS.map((f) => {
               const active = filter === f.id
               return (
@@ -107,7 +107,7 @@ export default function Shop({ filter, onFilterChange }) {
                   {active && (
                     <m.span
                       layoutId="filter-pill"
-                      className="absolute inset-0 rounded-full bg-white"
+                      className="absolute inset-0 rounded-full bg-fg"
                       transition={{ type: 'spring', stiffness: 420, damping: 34 }}
                     />
                   )}
@@ -158,7 +158,7 @@ export default function Shop({ filter, onFilterChange }) {
                   setQuery('')
                   onFilterChange('all')
                 }}
-                className="mt-5 h-11 rounded-full bg-white px-6 text-sm font-bold text-ink active:scale-95"
+                className="mt-5 h-11 rounded-full bg-fg px-6 text-sm font-bold text-ink active:scale-95"
               >
                 Ver todo
               </button>

@@ -22,7 +22,9 @@ export function pageMeta(path) {
   const brand = BRAND_BY_ID[product.brand]
   return {
     title: `${product.name} · ${brand.name} | ${SITE.name}`,
-    description: `${product.description} Pedilo por WhatsApp en la tienda oficial de ${SITE.name}.`,
+    description: brand.formal
+      ? `${product.description} Consultá por WhatsApp.`
+      : `${product.description} Pedilo por WhatsApp en la tienda oficial de ${SITE.name}.`,
     image: absolute(product.images[0].replace(/\.webp$/, '-md.webp')),
     url: absolute(path),
     // Foto principal de la galería: se precarga en el <head> de la página del producto

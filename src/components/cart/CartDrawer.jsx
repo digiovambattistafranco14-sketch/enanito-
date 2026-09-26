@@ -64,7 +64,7 @@ export default function CartDrawer() {
                       exit={{ opacity: 0, x: 8 }}
                       onClick={() => setStep('cart')}
                       aria-label="Volver al carrito"
-                      className="grid size-9 place-items-center rounded-full bg-white/5 transition-colors hover:bg-white/10"
+                      className="grid size-9 place-items-center rounded-full bg-fg/5 transition-colors hover:bg-fg/10"
                     >
                       <ArrowLeftIcon className="size-4" />
                     </m.button>
@@ -81,7 +81,7 @@ export default function CartDrawer() {
                   </p>
                 </div>
               </div>
-              <button onClick={cart.close} aria-label="Cerrar carrito" className="grid size-9 place-items-center rounded-full transition-all hover:rotate-90 hover:bg-white/5">
+              <button onClick={cart.close} aria-label="Cerrar carrito" className="grid size-9 place-items-center rounded-full transition-all hover:rotate-90 hover:bg-fg/5">
                 <CloseIcon className="size-4.5" />
               </button>
             </header>
@@ -126,7 +126,7 @@ function EmptyCart({ onClose }) {
       </div>
       <p className="mt-5 font-bold">Tu carrito está vacío</p>
       <p className="mt-1.5 text-sm text-muted">Sumá productos de cualquiera de las embajadas y armá tu pedido.</p>
-      <button onClick={onClose} className="mt-6 rounded-full bg-white px-6 py-3 text-sm font-bold text-ink transition-transform active:scale-95">
+      <button onClick={onClose} className="mt-6 rounded-full bg-fg px-6 py-3 text-sm font-bold text-ink transition-transform active:scale-95">
         Seguir mirando
       </button>
     </div>
@@ -170,11 +170,11 @@ function CartItems({ onCheckout }) {
                     </div>
                     <div className="mt-auto flex items-center justify-between">
                       <div className="flex items-center rounded-full border border-line-strong">
-                        <button onClick={() => dec(product.id)} aria-label="Restar uno" className="grid size-8 place-items-center rounded-full transition-colors hover:bg-white/5">
+                        <button onClick={() => dec(product.id)} aria-label="Restar uno" className="grid size-8 place-items-center rounded-full transition-colors hover:bg-fg/5">
                           <MinusIcon className="size-3.5" />
                         </button>
                         <span className="min-w-6 text-center text-sm font-bold tabular-nums">{qty}</span>
-                        <button onClick={() => inc(product.id)} aria-label="Sumar uno" className="grid size-8 place-items-center rounded-full transition-colors hover:bg-white/5">
+                        <button onClick={() => inc(product.id)} aria-label="Sumar uno" className="grid size-8 place-items-center rounded-full transition-colors hover:bg-fg/5">
                           <PlusIcon className="size-3.5" />
                         </button>
                       </div>
@@ -203,7 +203,7 @@ function CartItems({ onCheckout }) {
         {hasQuotes && <p className="mt-1 text-right text-xs text-subtle">Te pasamos el precio por WhatsApp</p>}
         <button
           onClick={onCheckout}
-          className="group mt-5 flex h-13 w-full items-center justify-center gap-2 rounded-full bg-white text-sm font-bold text-ink transition-all duration-300 hover:gap-3 active:scale-[0.98]"
+          className="group mt-5 flex h-13 w-full items-center justify-center gap-2 rounded-full bg-fg text-sm font-bold text-ink transition-all duration-300 hover:gap-3 active:scale-[0.98]"
         >
           Continuar con el pedido
           <ArrowRightIcon className="size-4" />

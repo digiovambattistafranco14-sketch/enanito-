@@ -22,7 +22,7 @@ function ProductCard({ product }) {
   const morph = getMorphId() === product.id
 
   return (
-    <article className="group relative flex h-full flex-col overflow-hidden rounded-[1.25rem] border border-line bg-ink-2 transition-[border-color,box-shadow,transform] duration-500 ease-out-quint hover:-translate-y-1 hover:border-line-strong hover:shadow-2xl hover:shadow-black/50 sm:rounded-3xl">
+    <article className="group relative flex h-full flex-col overflow-hidden rounded-[1.25rem] border border-line bg-ink-2 transition-[border-color,box-shadow,transform] duration-500 ease-out-quint hover:-translate-y-1 hover:border-line-strong hover:shadow-2xl hover:shadow-fg/10 sm:rounded-3xl">
       <div
         ref={frameRef}
         className="relative block aspect-[4/5] overflow-hidden bg-ink-3"
@@ -49,7 +49,7 @@ function ProductCard({ product }) {
         <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/50 to-transparent" />
 
         {product.tag && (
-          <span className="absolute left-2 top-2 max-w-[calc(100%-1rem)] truncate rounded-full bg-white px-2 py-1 text-[9px] font-bold uppercase tracking-wider text-ink sm:left-3 sm:top-3 sm:px-2.5 sm:text-[10px]">
+          <span className="absolute left-2 top-2 max-w-[calc(100%-1rem)] truncate rounded-full bg-white px-2 py-1 text-[9px] font-bold uppercase tracking-wider text-fg sm:left-3 sm:top-3 sm:px-2.5 sm:text-[10px]">
             {product.tag}
           </span>
         )}
