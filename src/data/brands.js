@@ -42,7 +42,7 @@ export const BRANDS = [
       'Asesoramiento y servicios de Seguridad e Higiene Laboral: mediciones de iluminación y ruido, planes de evacuación, capacitaciones, investigación de accidentes y cursos de RCP. Cumplimos la normativa y prevenimos riesgos.',
     allianceLabel: 'A cargo',
     alliance:
-      'Emanuel Ordoñez, Técnico Superior en Seguridad e Higiene en el Trabajo. Compromiso, profesionalismo, experiencia y resultados para cada empresa.',
+      'Emanuel acompaña a cada empresa con compromiso, profesionalismo y experiencia para cumplir la normativa y prevenir riesgos.',
     story: { image: img('ng', 'equipo-en-accion'), caption: 'Seguridad laboral y capacitaciones para tu empresa.' },
   },
   {
