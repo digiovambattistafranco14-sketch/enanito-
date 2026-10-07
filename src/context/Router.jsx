@@ -51,14 +51,36 @@ export function RouterProvider({ initialPath, children }) {
         setPath(window.location.pathname)
       })
     }
+    // Al recargar (o si el celular recarga la pestaña al volver de WhatsApp) se vuelve
+    // a la misma altura de la página en lugar de saltar arriba de todo
+    // (se guarda un rato después de cada scroll: al cerrarse la página ya es tarde en algunos navegadores)
+    let timer
+    const savePosition = () => {
+      clearTimeout(timer)
+      timer = setTimeout(() => history.replaceState({ ...history.state, scrollY: window.scrollY }, ''), 250)
+    }
+    const saved = history.state?.scrollY
+    if (saved > 0) requestAnimationFrame(() => window.scrollTo(0, saved))
+
     window.addEventListener('popstate', onPop)
-    return () => window.removeEventListener('popstate', onPop)
+    window.addEventListener('scroll', savePosition, { passive: true })
+    return () => {
+      clearTimeout(timer)
+      window.removeEventListener('popstate', onPop)
+      window.removeEventListener('scroll', savePosition)
+    }
   }, [])
 
-  // Aplica el scroll pendiente apenas se pinta la nueva página (dentro de la transición)
+  // Aplica el scroll pendiente apenas se pinta la nueva página (dentro de la transición).
+  // Sin scroll pendiente igual se "salta" a la posición actual: eso obliga al scroll suave
+  // a medir la altura de la página nueva (si no, un scrollTo posterior quedaría recortado).
+  const firstRender = useRef(true)
   useIsoLayoutEffect(() => {
-    if (pendingScroll.current == null) return
-    jumpTo(pendingScroll.current)
+    if (firstRender.current) {
+      firstRender.current = false
+      return
+    }
+    jumpTo(pendingScroll.current ?? window.scrollY)
     pendingScroll.current = null
   }, [path])
 

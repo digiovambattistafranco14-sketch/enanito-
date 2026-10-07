@@ -61,7 +61,7 @@ function BrandCard({ brand, index, count, onShowProducts }) {
     <article
       onPointerMove={onMove}
       style={{ '--accent': brand.accent }}
-      className="group relative h-full overflow-hidden rounded-[2rem] border border-line bg-ink-2 transition-[border-color,transform] duration-500 ease-out-quint hover:-translate-y-1 hover:border-[color-mix(in_srgb,var(--accent)_45%,transparent)]"
+      className="group relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-line bg-ink-2 transition-[border-color,transform] duration-500 ease-out-quint hover:-translate-y-1 hover:border-[color-mix(in_srgb,var(--accent)_45%,transparent)]"
     >
       <div
         aria-hidden
@@ -94,7 +94,7 @@ function BrandCard({ brand, index, count, onShowProducts }) {
         </span>
       </div>
 
-      <div className="relative z-20 -mt-10 flex flex-col p-5 sm:p-8">
+      <div className="relative z-20 -mt-10 flex flex-1 flex-col p-5 sm:p-8">
         <h3 className="text-3xl font-extrabold tracking-tight sm:text-4xl">{brand.name}</h3>
         <p className="mt-2 text-sm font-semibold" style={{ color: brand.text }}>
           {brand.tagline}
@@ -117,7 +117,7 @@ function BrandCard({ brand, index, count, onShowProducts }) {
           {brand.alliance}
         </blockquote>
 
-        <div className="mt-7 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:items-center">
+        <div className="mt-auto flex flex-col gap-2.5 pt-7 sm:flex-row sm:flex-wrap sm:items-center">
           <button
             onClick={() => onShowProducts(brand.id)}
             className="group/btn inline-flex h-12 items-center justify-center gap-2 rounded-full sm:h-11 bg-fg px-5 text-sm font-bold text-ink transition-all duration-300 hover:gap-3 active:scale-[0.97]"

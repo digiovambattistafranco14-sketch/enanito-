@@ -4,6 +4,9 @@ import { formatPrice, formatTotal } from './format'
 
 const DIVIDER = '—————————————————'
 
+// Saca los símbolos de formato de WhatsApp (* _ ~ `) para que no rompan las negritas
+const clean = (text) => text.replace(/[*_~`]/g, '').replace(/\s+/g, ' ').trim()
+
 /**
  * Arma el mensaje del pedido con el formato exacto pedido por la marca.
  * @param {{ name: string, phone: string }} customer
@@ -21,8 +24,8 @@ export function buildOrderMessage(customer, lines, total) {
     '🛒 *NUEVO PEDIDO - WEB*',
     '🔴🔴 *ENANITO ORDONIEEE* 🔴🔴',
     DIVIDER,
-    `👤 *${customer.name.trim()}*`,
-    `📞 *${customer.phone.trim()}*`,
+    `👤 *${clean(customer.name)}*`,
+    `📞 *${clean(customer.phone)}*`,
     DIVIDER,
     '*PEDIDO:*',
     ...items,

@@ -65,6 +65,8 @@ export default function App() {
       <Suspense fallback={null}>
         <Footer />
       </Suspense>
+      {/* Espacio para que la barra fija del producto (celular) no tape el final del footer */}
+      {productId && <div aria-hidden className="h-20 sm:hidden" />}
       {/* En la página de producto (celular) la barra fija de abajo reemplaza al botón flotante */}
       <CartFab className={productId ? 'max-sm:hidden' : ''} />
       {cartMounted && (
