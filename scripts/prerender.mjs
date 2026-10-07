@@ -1,15 +1,19 @@
-// Pre-render: genera el HTML completo de cada página dentro de dist/.
+// Pre-render: genera dentro de dist/ todo lo que se puede dejar listo en el build.
 //   /                   → dist/index.html
 //   /producto/<id>/     → dist/producto/<id>/index.html
+//   404.html            → página de "no encontrado"
+//   /og/<nombre>.jpg    → imagen 1200×630 para la vista previa al compartir (WhatsApp, Instagram…)
+//   sitemap.xml y robots.txt
 // Así el contenido se ve apenas llega el HTML (sin esperar al JavaScript), Google lo indexa
-// y el link de cada producto muestra su foto al compartirlo por WhatsApp.
+// y el link de cada producto muestra su foto al compartirlo.
 import { mkdir, readFile, writeFile, rm } from 'node:fs/promises'
 import { dirname } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
+import sharp from 'sharp'
 
 const root = fileURLToPath(new URL('..', import.meta.url))
 const dist = `${root}dist`
-const { render, routes } = await import(pathToFileURL(`${root}dist-ssr/entry-server.js`).href)
+const { render, routes, siteUrl } = await import(pathToFileURL(`${root}dist-ssr/entry-server.js`).href)
 
 let template = await readFile(`${dist}/index.html`, 'utf-8')
 if (!template.includes('<div id="root"></div>')) throw new Error('No se encontró <div id="root"></div> en dist/index.html')
@@ -33,30 +37,59 @@ function withHead(html, meta, url) {
     .replace(/(<meta property="og:type" content=")[^"]*(")/, `$1${url === '/' ? 'website' : 'product'}$2`)
     .replace(
       '</head>',
-      // Con dominio configurado (SITE.url) se agregan la URL canónica y la de la vista previa
-      meta.url.startsWith('http')
-        ? `  <link rel="canonical" href="${meta.url}" />
-    <meta property="og:url" content="${meta.url}" />
-  </head>`
-        : '</head>',
+      `  <link rel="canonical" href="${meta.url}" />\n    <meta property="og:url" content="${meta.url}" />\n  </head>`,
     )
 }
 
+const page = (html) => template.replace('<div id="root"></div>', `<div id="root">${html}</div>`)
+
+/** Imagen para compartir: la foto entera centrada sobre una versión desenfocada de sí misma. */
+async function ogImage(source, name) {
+  const file = `${root}public${source}`
+  const [W, H] = [1200, 630]
+  const background = await sharp(file).resize(W, H, { fit: 'cover' }).blur(28).modulate({ brightness: 0.75 }).toBuffer()
+  const photo = await sharp(file).resize(W, H, { fit: 'inside' }).toBuffer()
+  await sharp(background)
+    .composite([{ input: photo, gravity: 'centre' }])
+    .jpeg({ quality: 80, mozjpeg: true })
+    .toFile(`${dist}/og/${name}.jpg`)
+}
+
+await mkdir(`${dist}/og`, { recursive: true })
+
 for (const url of routes) {
   const { html, meta } = render(url)
-  let page = withHead(template.replace('<div id="root"></div>', `<div id="root">${html}</div>`), meta, url)
+  let out = withHead(page(html), meta, url)
   if (url !== '/') {
     // En cada producto se precarga su propia foto en lugar de la de la historia del inicio
     const preload = meta.preload
       ? `
     <link rel="preload" as="image" type="image/avif" fetchpriority="high" imagesrcset="${meta.preload.srcSet}" imagesizes="${meta.preload.sizes}" />`
       : ''
-    page = page.replace(heroPreload, preload)
+    out = out.replace(heroPreload, preload)
   }
   const file = url === '/' ? `${dist}/index.html` : `${dist}${url}index.html`
   await mkdir(dirname(file), { recursive: true })
-  await writeFile(file, page)
+  await writeFile(file, out)
+  await ogImage(meta.ogSource, meta.ogName)
 }
 
+// 404.html: Vercel la sirve sola para cualquier dirección que no exista
+const notFound = page(render('/404/').html)
+  .replace(/<title>[\s\S]*?<\/title>/, '<title>Página no encontrada · El Enanito Ordonieee</title>')
+  .replace(heroPreload, '')
+  .replace('</head>', '  <meta name="robots" content="noindex" />\n  </head>')
+await writeFile(`${dist}/404.html`, notFound)
+
+// sitemap.xml + robots.txt
+const today = new Date().toISOString().slice(0, 10)
+await writeFile(
+  `${dist}/sitemap.xml`,
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${routes
+    .map((url) => `  <url><loc>${siteUrl}${url}</loc><lastmod>${today}</lastmod><priority>${url === '/' ? '1.0' : '0.7'}</priority></url>`)
+    .join('\n')}\n</urlset>\n`,
+)
+await writeFile(`${dist}/robots.txt`, `User-agent: *\nAllow: /\n\nSitemap: ${siteUrl}/sitemap.xml\n`)
+
 await rm(`${root}dist-ssr`, { recursive: true, force: true })
-console.log(`✓ Pre-render listo: ${routes.length} páginas (inicio + ${routes.length - 1} productos)`)
+console.log(`✓ Pre-render listo: ${routes.length} páginas (inicio + ${routes.length - 1} productos), 404, sitemap e imágenes para compartir`)

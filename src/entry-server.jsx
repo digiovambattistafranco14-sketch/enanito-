@@ -3,6 +3,9 @@ import Root from './Root'
 import { productPath } from './context/Router'
 import { PRODUCTS } from './data/products'
 import { pageMeta } from './lib/meta'
+import { SITE } from './config/site'
+
+export const siteUrl = SITE.url
 
 /** Todas las páginas que se generan en el build (ver scripts/prerender.mjs). */
 export const routes = ['/', ...PRODUCTS.map((p) => productPath(p.id))]

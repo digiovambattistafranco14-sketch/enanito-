@@ -16,9 +16,11 @@ npm run preview  # prueba el build de producción en local
 ## Rendimiento
 
 - **Pre-render:** `npm run build` genera el HTML completo de la página (con el CSS en línea), así el contenido se ve apenas llega, sin esperar al JavaScript. Después React lo "activa" por bloques.
-- **Imágenes responsive:** cada foto tiene 4 tamaños (360 / 640 / 1000 / 1400 px) en AVIF y WebP; el navegador baja solo el tamaño y formato que necesita.
+- **Imágenes responsive:** cada foto tiene 5 tamaños (160 / 360 / 640 / 1000 / 1400 px) en AVIF y WebP; el navegador baja solo el tamaño y formato que necesita.
 - **Carga diferida:** el carrito, la vista de producto y el motor de animaciones se cargan aparte, después de la primera pintura.
 - **Fuente auto-alojada** (`public/fonts`, solo latín) con precarga.
+- **Caché** (`vercel.json`): JavaScript y fuente por 1 año, fotos por 30 días. En la segunda visita casi no se descarga nada.
+- **SEO y compartir:** el build genera `sitemap.xml`, `robots.txt`, `404.html` y una imagen 1200×630 por producto (`/og/<id>.jpg`) para la vista previa en WhatsApp/Instagram.
 - Lighthouse móvil (throttling real): **Performance 91–98 · Accesibilidad 100 · Buenas prácticas 100 · SEO 100**.
 
 ## Lo primero que hay que configurar
@@ -42,7 +44,7 @@ producto con su título y foto, así el link se ve bien en Google y al compartir
 ## Agregar productos
 
 1. Copiá la foto en `public/products/<zoe|ng|reco|apache>/nombre-del-producto.jpg`
-2. Corré `npm run optimize` → genera los 4 tamaños en `.webp` y `.avif`
+2. Corré `npm run optimize` → genera todos los tamaños en `.webp` y `.avif`
 3. Sumá el producto en `src/data/products.js`:
 
 ```js

@@ -1,7 +1,7 @@
 // Optimiza las fotos de /public/products:
 //  1. Convierte cada .jpg/.jpeg/.png a .webp (máx. 1400px, calidad 78) y borra el original.
 //  2. Genera versiones más chicas para que cada pantalla baje solo lo que necesita:
-//     "-xs" (360px), "-sm" (640px) y "-md" (1000px).
+//     "-th" (160px, miniaturas), "-xs" (360px), "-sm" (640px) y "-md" (1000px).
 //  3. Crea una copia .avif de cada tamaño (pesa ~40-50% menos; los navegadores que no
 //     lo soportan usan el .webp automáticamente).
 // Uso: npm run optimize
@@ -14,6 +14,7 @@ const ROOT = fileURLToPath(new URL('../public/products/', import.meta.url))
 const SOURCE_EXT = new Set(['.jpg', '.jpeg', '.png'])
 const LARGE = 1400
 const VARIANTS = [
+  { suffix: '-th', width: 160, quality: 68 },
   { suffix: '-xs', width: 360, quality: 70 },
   { suffix: '-sm', width: 640, quality: 72 },
   { suffix: '-md', width: 1000, quality: 75 },

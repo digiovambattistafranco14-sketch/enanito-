@@ -8,9 +8,10 @@ export const SITE = {
   instagram: 'https://www.instagram.com/elenanito.ordonieee/',
   region: 'Reconquista, Santa Fe',
 
-  // Dominio donde se publica la web, sin "/" al final (ej. 'https://enanitoordonieee.com').
-  // Hace falta para que WhatsApp/Instagram muestren la foto del producto al compartir un link.
-  url: import.meta.env.VITE_SITE_URL || '',
+  // Dominio donde está publicada la web, sin "/" al final. Si algún día se compra un dominio
+  // propio, cambiarlo acá (o con VITE_SITE_URL): lo usan el sitemap, Google y las vistas
+  // previas de WhatsApp/Instagram al compartir un link.
+  url: import.meta.env.VITE_SITE_URL || 'https://elenanito.vercel.app',
 
   // Número de WhatsApp que recibe los pedidos: código de país + área + número,
   // sin "+", espacios ni guiones. Ej. Argentina: 549 + 342 + 5551234 → "5493425551234".

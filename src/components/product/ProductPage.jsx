@@ -297,8 +297,8 @@ function NotFound() {
   return (
     <main className="container-x flex min-h-[80svh] flex-col items-center justify-center pt-24 text-center">
       <p className="text-7xl font-extrabold tracking-tighter text-accent">404</p>
-      <h1 className="mt-4 text-2xl font-bold">Este producto ya no está disponible</h1>
-      <p className="mt-2 text-muted">Puede que se haya agotado o que el link esté mal escrito.</p>
+      <h1 className="mt-4 text-2xl font-bold">No encontramos esta página</h1>
+      <p className="mt-2 text-muted">Puede que el producto ya no esté disponible o que el link esté mal escrito.</p>
       <button onClick={() => navigate('/')} className="mt-8 h-12 rounded-full bg-fg px-6 text-sm font-bold text-ink active:scale-95">
         Ir a la tienda
       </button>

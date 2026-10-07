@@ -42,7 +42,9 @@ export default function App() {
   return (
     <>
       <Navbar />
-      {productId ? (
+      {/* Cualquier ruta que no sea el inicio va a ProductPage: si no es un producto
+          válido, muestra el aviso de "no encontrado" (también es la página 404.html) */}
+      {path !== '/' ? (
         <ProductPage productId={productId} onShowBrand={showBrand} />
       ) : (
         /* Cada <Suspense> es un bloque que React activa por separado al cargar:

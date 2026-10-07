@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
-import Lenis from 'lenis'
 
 const ScrollContext = createContext(null)
 const NAV_OFFSET = -80
@@ -12,17 +11,24 @@ export function SmoothScrollProvider({ children }) {
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
-    const instance = new Lenis({ duration: 1.15, easing: (t) => 1 - Math.pow(1 - t, 4) })
-    const raf = (time) => {
-      instance.raf(time)
+    // La librería se descarga aparte, después de la primera pintura
+    let instance
+    let cancelled = false
+    import('lenis').then(({ default: Lenis }) => {
+      if (cancelled) return
+      instance = new Lenis({ duration: 1.15, easing: (t) => 1 - Math.pow(1 - t, 4) })
+      const raf = (time) => {
+        instance.raf(time)
+        frame.current = requestAnimationFrame(raf)
+      }
       frame.current = requestAnimationFrame(raf)
-    }
-    frame.current = requestAnimationFrame(raf)
-    setLenis(instance)
+      setLenis(instance)
+    })
 
     return () => {
+      cancelled = true
       cancelAnimationFrame(frame.current)
-      instance.destroy()
+      instance?.destroy()
     }
   }, [])
 
